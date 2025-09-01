@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplos de Animaciones, Transiciones y Transformaciones</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 600px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        /* Animación Lineal */
+        .animacion-lineal-box {
+            width: 100px;
+            height: 100px;
+            background-color: #4CAF50;
+            margin: 20px auto;
+            position: relative;
+            animation: moverLineal 3s linear infinite alternate; /* Animación: nombre duración tipo-velocidad repeticiones dirección */
+        }
+
+        @keyframes moverLineal {
+            0% { left: -50px; }
+            100% { left: 50px; }
+        }
+
+        /* Transición */
+        .transicion-box {
+            width: 100px;
+            height: 100px;
+            background-color: #2196F3;
+            margin: 20px auto;
+            transition: background-color 0.5s ease-in-out, transform 0.5s ease-in-out; /* Propiedad duración tipo-velocidad */
+        }
+
+        .transicion-box:hover {
+            background-color: #ff9800; /* Cambia el color de fondo */
+            transform: scale(1.2); /* Aumenta el tamaño */
+        }
+
+        /* Transformación */
+        .transformacion-box {
+            width: 100px;
+            height: 100px;
+            background-color: #f44336;
+            margin: 20px auto;
+            transition: transform 0.5s ease;
+        }
+
+        .transformacion-box:hover {
+            transform: rotate(45deg) skewX(15deg); /* Rota y sesga el elemento */
+        }
+    </style>
+</head>
+<body>
+    <h1>Ejemplos de CSS: Animaciones, Transiciones y Transformaciones</h1>
+
+    <!-- Contenedor para Animación Lineal -->
+    <div class="container">
+        <h2>Animación Lineal</h2>
+        <p>La caja se mueve de izquierda a derecha continuamente.</p>
+        <div class="animacion-lineal-box"></div>
+    </div>
+
+    <!-- Contenedor para Transición -->
+    <div class="container">
+        <h2>Transición</h2>
+        <p>Pasa el cursor sobre la caja para ver el cambio de color y tamaño.</p>
+        <div class="transicion-box"></div>
+    </div>
+
+    <!-- Contenedor para Transformación -->
+    <div class="container">
+        <h2>Transformación</h2>
+        <p>Pasa el cursor sobre la caja para rotarla y sesgarla.</p>
+        <div class="transformacion-box"></div>
+    </div>
+
+</body>
+</html>
