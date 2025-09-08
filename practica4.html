@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animación Squash y Stretch</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: dodgerblue;
+            border-radius: 10px;
+            transform-origin: bottom center; /* Punto de origen para la transformación */
+            animation: squashAndStretch 2s infinite ease-in-out;
+        }
+
+        @keyframes squashAndStretch {
+            0% {
+                transform: scale(1, 1); /* Estado inicial */
+            }
+            25% {
+                transform: scale(1.2, 0.8); /* Squash: se ensancha y se aplasta */
+            }
+            50% {
+                transform: scale(0.8, 1.2); /* Stretch: se estira y se adelgaza */
+            }
+            75% {
+                transform: scale(1.1, 0.9); /* Un poco de rebote */
+            }
+            100% {
+                transform: scale(1, 1); /* Vuelve al estado inicial */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+</body>
+</html>
