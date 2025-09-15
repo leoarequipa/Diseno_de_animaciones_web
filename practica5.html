@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráficos y Animaciones con SVG y CSS</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            gap: 40px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            display: flex;
+            gap: 60px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .graphic-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .graphic-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .graphic-item svg {
+            width: 120px;
+            height: 120px;
+        }
+
+        /* Animación de rotación para el círculo */
+        .rotate-circle circle {
+            transform-origin: center;
+            animation: svgRotate 4s linear infinite;
+        }
+
+        @keyframes svgRotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Animación de escala para el cuadrado */
+        .scale-square rect {
+            transform-origin: center;
+            animation: svgScale 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes svgScale {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.3);
+            }
+        }
+
+        /* Animación de movimiento para el triángulo */
+        .move-triangle polygon {
+            transform-origin: center;
+            animation: svgMove 3.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes svgMove {
+            0% {
+                transform: translateX(-20px);
+            }
+            100% {
+                transform: translateX(20px);
+            }
+        }
+
+        /* Animación de color para la estrella */
+        .color-star polygon {
+            animation: svgColor 5s infinite alternate;
+        }
+
+        @keyframes svgColor {
+            0% {
+                fill: #FFD700; /* Gold */
+            }
+            25% {
+                fill: #FF6347; /* Tomato */
+            }
+            50% {
+                fill: #8A2BE2; /* BlueViolet */
+            }
+            75% {
+                fill: #3CB371; /* MediumSeaGreen */
+            }
+            100% {
+                fill: #FFD700;
+            }
+        }
+
+        /* Animación de trazo para la línea */
+        .stroke-line line {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 0;
+            animation: svgStroke 4s linear infinite;
+        }
+
+        @keyframes svgStroke {
+            0% {
+                stroke-dashoffset: 0;
+            }
+            100% {
+                stroke-dashoffset: -200;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Gráficos y Animaciones con SVG y CSS</h1>
+
+    <div class="container">
+        <!-- Círculo con animación de rotación -->
+        <div class="graphic-item rotate-circle">
+            <svg viewBox="0 0 100 100">                <circle cx="50" cy="50" r="40" fill="#FF6347" />
+            </svg>
+            <p>Círculo Rotatorio</p>
+        </div>
+
+        <!-- Cuadrado con animación de escala -->
+        <div class="graphic-item scale-square">
+            <svg viewBox="0 0 100 100">
+                <rect x="10" y="10" width="80" height="80" fill="#4CAF50" />
+            </svg>
+            <p>Cuadrado con Escala</p>
+        </div>
+
+        <!-- Triángulo con animación de movimiento -->
+        <div class="graphic-item move-triangle">
+            <svg viewBox="0 0 100 100">
+                <polygon points="50,10 90,90 10,90" fill="#2196F3" />
+            </svg>
+            <p>Triángulo en Movimiento</p>
+        </div>
+
+        <!-- Estrella con animación de color -->
+        <div class="graphic-item color-star">
+            <svg viewBox="0 0 100 100">
+                <polygon points="50,5 61,39 98,39 68,61 79,95 50,73 21,95 32,61 2,39 39,39" fill="#FFD700" />
+            </svg>
+            <p>Estrella Cambia Color</p>
+        </div>
+
+        <!-- Línea con animación de trazo -->
+        <div class="graphic-item stroke-line">
+            <svg viewBox="0 0 100 100">
+                <line x1="10" y1="50" x2="90" y2="50" stroke="#9C27B0" stroke-width="5" />
+            </svg>
+            <p>Línea con Trazo Animado</p>
+        </div>
+    </div>
+</body>
+</html>
