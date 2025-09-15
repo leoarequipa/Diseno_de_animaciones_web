@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gráficos y Animaciones con SVG y CSS</title>
+    <title>Animaciones de Logos con CSS</title>
     <style>
         body {
             display: flex;
@@ -45,137 +45,99 @@
             transform: translateY(-10px);
         }
 
-        .graphic-item svg {
+        .graphic-item img {
             width: 120px;
             height: 120px;
         }
 
-        /* Animación de rotación para el círculo */
-        .rotate-circle circle {
+        /* Animación de rotación para el logo */
+        .rotate-logo img {
             transform-origin: center;
             animation: svgRotate 4s linear infinite;
         }
 
         @keyframes svgRotate {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
-        /* Animación de escala para el cuadrado */
-        .scale-square rect {
+        /* Animación de escala para el logo */
+        .scale-logo img {
             transform-origin: center;
             animation: svgScale 3s ease-in-out infinite alternate;
         }
 
         @keyframes svgScale {
-            0% {
-                transform: scale(1);
-            }
-            100% {
-                transform: scale(1.3);
-            }
+            from { transform: scale(1); }
+            to { transform: scale(1.3); }
         }
 
-        /* Animación de movimiento para el triángulo */
-        .move-triangle polygon {
+        /* Animación de movimiento para el logo */
+        .move-logo img {
             transform-origin: center;
             animation: svgMove 3.5s ease-in-out infinite alternate;
         }
 
         @keyframes svgMove {
-            0% {
-                transform: translateX(-20px);
-            }
-            100% {
-                transform: translateX(20px);
-            }
+            from { transform: translateX(-20px); }
+            to { transform: translateX(20px); }
         }
 
-        /* Animación de color para la estrella */
-        .color-star polygon {
-            animation: svgColor 5s infinite alternate;
+        /* Animación de color para el logo */
+        .color-logo img {
+            animation: changeColor 5s infinite alternate;
         }
 
-        @keyframes svgColor {
-            0% {
-                fill: #FFD700; /* Gold */
-            }
-            25% {
-                fill: #FF6347; /* Tomato */
-            }
-            50% {
-                fill: #8A2BE2; /* BlueViolet */
-            }
-            75% {
-                fill: #3CB371; /* MediumSeaGreen */
-            }
-            100% {
-                fill: #FFD700;
-            }
+        @keyframes changeColor {
+            from { filter: hue-rotate(0deg); }
+            to { filter: hue-rotate(360deg); }
         }
 
-        /* Animación de trazo para la línea */
-        .stroke-line line {
-            stroke-dasharray: 100;
-            stroke-dashoffset: 0;
-            animation: svgStroke 4s linear infinite;
+        /* Animación de "shake" para el logo */
+        .shake-logo img {
+            animation: shake 0.8s cubic-bezier(.36,.07,.19,.97) infinite;
         }
 
-        @keyframes svgStroke {
-            0% {
-                stroke-dashoffset: 0;
-            }
-            100% {
-                stroke-dashoffset: -200;
-            }
+        @keyframes shake {
+            10%, 90% { transform: translateX(-1px); }
+            20%, 80% { transform: translateX(2px); }
+            30%, 50%, 70% { transform: translateX(-3px); }
+            40%, 60% { transform: translateX(3px); }
         }
     </style>
 </head>
 <body>
-    <h1>Gráficos y Animaciones con SVG y CSS</h1>
+    <h1>Animaciones de Logos con CSS</h1>
 
     <div class="container">
-        <!-- Círculo con animación de rotación -->
-        <div class="graphic-item rotate-circle">
-            <svg viewBox="0 0 100 100">                <circle cx="50" cy="50" r="40" fill="#FF6347" />
-            </svg>
-            <p>Círculo Rotatorio</p>
+        <!-- Logo con animación de rotación -->
+        <div class="graphic-item rotate-logo">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/googlechrome.svg" alt="Logo de Google Chrome">
+            <p>Logo Rotatorio</p>
         </div>
 
-        <!-- Cuadrado con animación de escala -->
-        <div class="graphic-item scale-square">
-            <svg viewBox="0 0 100 100">
-                <rect x="10" y="10" width="80" height="80" fill="#4CAF50" />
-            </svg>
-            <p>Cuadrado con Escala</p>
+        <!-- Logo con animación de escala -->
+        <div class="graphic-item scale-logo">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/visualstudiocode.svg" alt="Logo de Visual Studio Code">
+            <p>Logo con Escala</p>
         </div>
 
-        <!-- Triángulo con animación de movimiento -->
-        <div class="graphic-item move-triangle">
-            <svg viewBox="0 0 100 100">
-                <polygon points="50,10 90,90 10,90" fill="#2196F3" />
-            </svg>
-            <p>Triángulo en Movimiento</p>
+        <!-- Logo con animación de movimiento -->
+        <div class="graphic-item move-logo">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg" alt="Logo de GitHub">
+            <p>Logo en Movimiento</p>
         </div>
 
-        <!-- Estrella con animación de color -->
-        <div class="graphic-item color-star">
-            <svg viewBox="0 0 100 100">
-                <polygon points="50,5 61,39 98,39 68,61 79,95 50,73 21,95 32,61 2,39 39,39" fill="#FFD700" />
-            </svg>
-            <p>Estrella Cambia Color</p>
+        <!-- Logo con animación de color -->
+        <div class="graphic-item color-logo">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/firefox.svg" alt="Logo de Firefox">
+            <p>Logo Cambia Color</p>
         </div>
 
-        <!-- Línea con animación de trazo -->
-        <div class="graphic-item stroke-line">
-            <svg viewBox="0 0 100 100">
-                <line x1="10" y1="50" x2="90" y2="50" stroke="#9C27B0" stroke-width="5" />
-            </svg>
-            <p>Línea con Trazo Animado</p>
+        <!-- Logo con animación de "shake" -->
+        <div class="graphic-item shake-logo">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/html5.svg" alt="Logo de HTML5">
+            <p>Logo con "Shake"</p>
         </div>
     </div>
 </body>
