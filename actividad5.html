@@ -1,0 +1,140 @@
+ a<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráficos y Animaciones Básicas</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            gap: 30px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            gap: 50px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .graphic-box {
+            width: 150px;
+            height: 150px;
+            background-color: #ff6347; /* Tomato */
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2em;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Animación de rotación */
+        .rotate-animation {
+            background-color: #4CAF50; /* Green */
+            animation: rotate360 3s linear infinite;
+        }
+
+        @keyframes rotate360 {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Animación de escala */
+        .scale-animation {
+            background-color: #2196F3; /* Blue */
+            animation: scaleUpDown 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes scaleUpDown {
+            0% {                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.2);
+            }
+        }
+
+        /* Animación de movimiento */
+        .move-animation {
+            background-color: #FFC107; /* Amber */
+            position: relative;
+            animation: moveLeftRight 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes moveLeftRight {
+            0% {
+                left: -50px;
+            }
+            100% {
+                left: 50px;
+            }
+        }
+
+        /* Animación de opacidad */
+        .opacity-animation {
+            background-color: #9C27B0; /* Purple */
+            animation: fadeInOut 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes fadeInOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.3;
+            }
+        }
+
+        /* Animación de color de fondo */
+        .color-animation {
+            background-color: #00BCD4; /* Cyan */
+            animation: changeColor 5s infinite alternate;
+        }
+
+        @keyframes changeColor {
+            0% {
+                background-color: #00BCD4;
+            }
+            25% {
+                background-color: #FF5722; /* Deep Orange */
+            }
+            50% {
+                background-color: #8BC34A; /* Light Green */
+            }
+            75% {
+                background-color: #673AB7; /* Deep Purple */
+            }
+            100% {
+                background-color: #00BCD4;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Gráficos y Animaciones Básicas con CSS</h1>
+
+    <div class="container">
+        <div class="graphic-box rotate-animation">Rotación</div>
+        <div class="graphic-box scale-animation">Escala</div>
+        <div class="graphic-box move-animation">Movimiento</div>
+        <div class="graphic-box opacity-animation">Opacidad</div>        <div class="graphic-box color-animation">Color</div>
+    </div>
+</body>
+</html>
