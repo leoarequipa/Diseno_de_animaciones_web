@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animación Interactiva</title>
+<style>
+canvas {
+border: 1px solid black;
+}
+</style>
+</head>
+<body>
+<canvas id="myCanvas" width="500" height="500"></canvas>
+<script>
+const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
+let circle = { x: 250, y: 250, radius: 50 };
+
+canvas.addEventListener('click', (event) => {
+circle.radius += 10;
+drawCircle();
+});
+
+canvas.addEventListener('mousemove', (event) => {
+circle.x = event.offsetX;
+circle.y = event.offsetY;
+drawCircle();
+});
+
+function drawCircle() {
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+ctx.beginPath();
+ctx.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2);
+ctx.fillStyle = 'blue';
+ctx.fill();
+ctx.closePath();
+}
+
+drawCircle();
+</script>
+</body>
+</html>
