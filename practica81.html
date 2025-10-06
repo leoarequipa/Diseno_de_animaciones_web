@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animación Optimizada con Anime.js</title>
+    <style>
+        /* Estilos para el cuerpo de la página */
+        body {
+            display: flex; /* Activa Flexbox para alinear elementos fácilmente */
+            justify-content: center; /* Centra el contenido horizontalmente */
+            align-items: center; /* Centra el contenido verticalmente */
+            min-height: 100vh; /* Asegura que el body ocupe al menos toda la altura de la pantalla */
+            margin: 0; /* Elimina el margen por defecto del navegador */
+            background-color: #1a1a2e; /* Un color de fondo oscuro para contraste */
+            overflow: hidden; /* Oculta cualquier parte de la animación que se salga de la pantalla */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #e0e0e0;
+        }
+
+        /* Contenedor que actúa como el "escenario" para nuestras formas. */
+        .container {
+            position: relative; /* Es crucial para que las formas con 'position: absolute' se posicionen dentro de este contenedor. */
+            width: 300px;
+            height: 300px;
+            display: flex; /* Lo usamos para centrar los elementos hijos (aunque aquí se posicionan de forma absoluta) */
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Estilo base para cada una de las formas que se animarán. */
+        .shape {
+            position: absolute; /* Permite que todas las formas se apilen en el mismo lugar (el centro del contenedor) al inicio. */
+            width: 80px;
+            height: 80px;
+            background-color: #0f3460;
+            border-radius: 10px;
+            /* Estado inicial de las formas: invisibles y sin tamaño. Desde aquí comenzará la animación. */
+            opacity: 0; /* Totalmente transparentes */
+            transform: scale(0); /* Escaladas a tamaño 0 */
+        }
+
+        /* La pseudoclase :nth-child() nos permite seleccionar elementos específicos en un grupo. */
+        /* Aquí la usamos para dar un color de fondo diferente a cada forma, creando un patrón de colores. */
+        .shape:nth-child(1) { background-color: #e94560; }
+        .shape:nth-child(2) { background-color: #533483; }
+        .shape:nth-child(3) { background-color: #0f3460; }
+        .shape:nth-child(4) { background-color: #e94560; }
+        .shape:nth-child(5) { background-color: #533483; }
+        .shape:nth-child(6) { background-color: #0f3460; }
+    </style>
+</head>
+<body>
+
+    <!-- Contenedor principal que centrará las formas y servirá como referencia para sus posiciones -->
+    <div class="container">
+        <!-- Estas son las 6 formas que vamos a animar. JavaScript las seleccionará usando la clase 'shape' -->
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <!-- Es importante incluir la librería Anime.js para que el código de animación funcione. -->
+    <!-- La traemos desde un CDN (Content Delivery Network), que es un servidor rápido para archivos populares. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script>
+        // Creamos una "línea de tiempo" (timeline) con Anime.js.
+        // Una timeline nos permite ejecutar animaciones una después de otra, en secuencia.
+        const timeline = anime.timeline({
+            targets: '.shape',       // El objetivo de nuestra animación son todos los elementos con la clase '.shape'.
+            easing: 'easeInOutExpo', // 'easing' define la curva de velocidad de la animación. 'easeInOutExpo' es muy suave.
+            loop: true               // 'loop: true' hace que la animación se repita infinitamente.
+        });
+
+        // Añadimos la primera animación a la línea de tiempo.
+        timeline
+        .add({
+            // Paso 1: Las formas aparecen y se dispersan.
+            // Mueve cada forma a una posición X aleatoria entre -120px y 120px.
+            translateX: () => anime.random(-120, 120), 
+            // Mueve cada forma a una posición Y aleatoria entre -120px y 120px.
+            translateY: () => anime.random(-120, 120), 
+            // Escala las formas desde su tamaño inicial (0) a su tamaño normal (1).
+            scale: 1, 
+            // Cambia la opacidad de 0 (invisible) a 1 (visible), creando un efecto de aparición.
+            opacity: [0, 1], 
+            // 'stagger' crea un retraso escalonado. Cada forma comenzará su animación 80ms después de la anterior.
+            delay: anime.stagger(80), 
+            // La duración total de esta parte de la animación será de 1200 milisegundos (1.2 segundos).
+            duration: 1200 
+        })
+        // Añadimos la segunda animación, que se ejecutará cuando la primera termine.
+        .add({
+            // Paso 2: Las formas regresan al centro y se desvanecen.
+            // Devuelve las formas a su posición X original (0).
+            translateX: 0, 
+            // Devuelve las formas a su posición Y original (0).
+            translateY: 0, 
+            // Reduce la escala de las formas de 1 a 0, haciéndolas desaparecer.
+            scale: 0, 
+            // Reduce la opacidad a 0, haciéndolas invisibles.
+            opacity: 0, 
+            // Usamos 'stagger' de nuevo, pero en reversa. La última forma que se movió será la primera en regresar.
+            delay: anime.stagger(80, {direction: 'reverse'}), 
+            // La duración de esta segunda parte también es de 1.2 segundos.
+            duration: 1200 
+        });
+    </script>
+</body>
+</html>

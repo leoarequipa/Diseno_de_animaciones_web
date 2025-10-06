@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slider de Imágenes con Anime.js</title>
+    <style>
+        /* Estilos generales para el cuerpo de la página */
+        body {
+            display: flex; /* Usa Flexbox para centrar contenido fácilmente */
+            flex-direction: column; /* Apila los elementos verticalmente (el h1 sobre el slider) */
+            justify-content: center; /* Centra el contenido verticalmente */
+            align-items: center; /* Centra el contenido horizontalmente */
+            min-height: 100vh; /* Asegura que el body ocupe al menos toda la altura de la pantalla */
+            margin: 0; /* Quita el margen por defecto del navegador */
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5; /* Un color de fondo suave */
+            color: #333;
+        }
+
+        /* Estilo para el título principal */
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        /* El contenedor principal del carrusel (slider) */
+        .slider-container {
+            width: 80%;
+            max-width: 600px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
+            overflow: hidden; /* ¡Muy importante! Oculta las imágenes que están fuera del contenedor */
+            position: relative; /* Necesario para posicionar elementos internos si se requiriera */
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* El contenedor que envuelve y mueve todas las imágenes */
+        .slider-images {
+            display: flex; /* Coloca las imágenes una al lado de la otra en una fila */
+            /* El ancho es el 100% multiplicado por el número de imágenes. Como hay 3, es 300%. */
+            /* Esto crea una "tira" de imágenes que moveremos. */
+            width: 300%; 
+            /* NOTA: La transición CSS no se usará, ya que Anime.js se encargará de la animación. */
+            /* transition: transform 0.5s ease-in-out; */
+        }
+
+        /* Estilo para cada imagen dentro del slider */
+        .slider-images img {
+            /* Cada imagen debe ocupar 1/3 del ancho del contenedor .slider-images (que es 300% del .slider-container) */
+            /* De esta forma, cada imagen ocupa exactamente el ancho del .slider-container visible. */
+            width: calc(100% / 3);
+            height: 350px;
+            object-fit: cover; /* Asegura que la imagen cubra el espacio sin deformarse */
+            border-radius: 8px;
+        }
+
+        /* Contenedor para los botones de control */
+        .slider-controls {
+            margin-top: 20px;
+            display: flex; /* Para alinear los botones */
+            justify-content: center;
+            gap: 15px; /* Espacio entre los botones */
+        }
+
+        /* Estilo para los botones */
+        .slider-controls button {
+            background-color: #3498db;
+            color: white;
+            border: none; /* Sin borde */
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer; /* Muestra una mano al pasar el cursor */
+            font-size: 1em;
+            /* Transiciones suaves para los efectos :hover y :active */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        /* Efecto al pasar el cursor sobre el botón */
+        .slider-controls button:hover {
+            background-color: #2980b9;
+            transform: scale(1.05); /* Agranda ligeramente el botón */
+        }
+
+        /* Efecto al hacer clic en el botón */
+        .slider-controls button:active {
+            transform: scale(0.95); /* Encoge ligeramente el botón para dar feedback */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Título de la página -->
+    <h1>Slider de Imágenes con Anime.js</h1>
+
+    <!-- Contenedor principal del slider -->
+    <div class="slider-container">
+        <!-- Este div contiene la "tira" de imágenes que se moverá horizontalmente -->
+        <div class="slider-images">
+            <!-- Usamos imágenes de ejemplo de Unsplash -->
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2070&auto=format&fit=crop" alt="Paisaje 1">
+            <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto=format&fit=crop" alt="Paisaje 2">
+            <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?q=80&w=2070&auto=format&fit=crop" alt="Paisaje 3">
+        </div>
+        <!-- Contenedor para los botones de navegación -->
+        <div class="slider-controls">
+            <button id="prevBtn">Anterior</button>
+            <button id="nextBtn">Siguiente</button>
+        </div>
+    </div>
+
+    <!-- Incluimos la librería Anime.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script>
+        // Espera a que todo el contenido HTML de la página se haya cargado antes de ejecutar el script.
+        // Esto previene errores si el script intenta acceder a elementos que aún no existen.
+        document.addEventListener('DOMContentLoaded', () => {
+            // Guardamos en constantes las referencias a los elementos HTML que vamos a manipular.
+            const sliderImages = document.querySelector('.slider-images');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            // Contamos cuántas imágenes hay en total. Esto hace el código flexible.
+            const totalImages = document.querySelectorAll('.slider-images img').length;
+            // Creamos una variable para saber en qué imagen estamos. Empezamos en la primera (índice 0).
+            let currentIndex = 0;
+
+            // Esta función se encarga de mover el slider a la imagen correcta.
+            function updateSlider() {
+                // Calculamos cuánto debemos mover el contenedor de imágenes.
+                // Si currentIndex es 1 (la segunda imagen), el offset será -33.33%.
+                // Si currentIndex es 2 (la tercera imagen), el offset será -66.66%.
+                const offset = -currentIndex * (100 / totalImages); 
+                
+                // Aquí es donde ocurre la magia de Anime.js.
+                anime({
+                    targets: sliderImages,      // El elemento que queremos animar.
+                    translateX: `${offset}%`,   // La propiedad que animamos (mover en el eje X) y su valor final.
+                    duration: 700,              // La animación durará 700 milisegundos.
+                    easing: 'easeOutExpo'       // El tipo de aceleración. 'easeOutExpo' empieza rápido y frena suavemente.
+                });
+            }
+
+            // Añadimos un "escuchador de eventos" al botón "Siguiente".
+            nextBtn.addEventListener('click', () => {
+                // Calculamos el nuevo índice. El operador de módulo (%) nos ayuda a crear un bucle.
+                // (0+1)%3=1, (1+1)%3=2, (2+1)%3=0. Vuelve al principio.
+                currentIndex = (currentIndex + 1) % totalImages;
+                updateSlider(); // Llamamos a la función para que anime el slider a la nueva posición.
+            });
+
+            // Hacemos lo mismo para el botón "Anterior".
+            prevBtn.addEventListener('click', () => {
+                // La lógica es un poco diferente para evitar números negativos.
+                // (0-1+3)%3=2, (2-1+3)%3=1, (1-1+3)%3=0. Funciona perfectamente.
+                currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+                updateSlider(); // Animamos el slider.
+            });
+        });
+    </script>
+
+</body>
+</html>
